@@ -35,13 +35,15 @@ class MainViewModel(app: Application) : ViewModel() {
     }
 
     val asteroids: LiveData<List<Asteroid>> = repository.asteroids
+    val todayAsteroids: LiveData<List<Asteroid>> = repository.getTodayAsteroids()
+    val weekAsteroids: LiveData<List<Asteroid>>  = repository.getWeekAsteroids()
 
     fun navigateToDetailFragment(asteroid: Asteroid) {
         _asteroidNav.value = asteroid
 
     }
 
-    fun onCompleteNavigation(){
+    fun onCompleteNavigation() {
         _asteroidNav.value = null
     }
 }

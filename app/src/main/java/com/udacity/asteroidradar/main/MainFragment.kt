@@ -15,6 +15,7 @@ private const val TAG = "MainFragment"
 
 class MainFragment : Fragment() {
 
+    private lateinit var adapter: AsteroidsAdapter
     private val viewModel: MainViewModel by lazy {
         ViewModelProvider(
             this,
@@ -32,9 +33,10 @@ class MainFragment : Fragment() {
 
         setHasOptionsMenu(true)
         binding.viewModel = viewModel
-        val adapter = AsteroidsAdapter(OnClickListener { viewModel.navigateToDetailFragment(it) })
+        adapter = AsteroidsAdapter(OnClickListener { viewModel.navigateToDetailFragment(it) })
         binding.asteroidRecycler.adapter = adapter
-        viewModel.asteroids.observe(viewLifecycleOwner, Observer {
+
+        viewModel.weekAsteroids.observe(viewLifecycleOwner, Observer {
             if (it != null && it.isNotEmpty()) {
                 Log.d(TAG, "onCreateView: ${it[0].closeApproachDate}")
                 adapter.submitList(it)
@@ -54,6 +56,7 @@ class MainFragment : Fragment() {
                 viewModel.onCompleteNavigation()
             }
         })
+
         return binding.root
     }
 
@@ -63,6 +66,29 @@ class MainFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.show_week_menu -> {
+                viewModel.asteroids.observe(viewLifecycleOwner, Observer { weekAsteroids ->
+                    if (weekAsteroids != null && weekAsteroids.isNotEmpty()){
+                        adapter.submitList(weekAsteroids)
+                    }
+                })
+            }
+            R.id.show_today_menu -> {
+                viewModel.todayAsteroids.observe(viewLifecycleOwner, Observer { todayAsteroid ->
+                    if (todayAsteroid != null && todayAsteroid.isNotEmpty()){
+                        adapter.submitList(todayAsteroid)
+                    }
+                })
+            }
+            else -> {
+                viewModel.asteroids.observe(viewLifecycleOwner, Observer { asteroid ->
+                    if (asteroid != null && asteroid.isNotEmpty()){
+                        adapter.submitList(asteroid)
+                    }
+                })
+            }
+        }
         return true
     }
 }

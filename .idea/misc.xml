@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/18 Nanodegree Projects/starter/app/src/main/res/layout/fragment_detail.xml" value="0.22826086956521738" />
         <entry key="..\:/18 Nanodegree Projects/starter/app/src/main/res/layout/item_container.xml" value="0.4" />
+        <entry key="..\:/18 Nanodegree Projects/starter/app/src/main/res/menu/main_overflow_menu.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>
